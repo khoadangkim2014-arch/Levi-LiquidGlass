@@ -6,20 +6,16 @@ plugins {
 
 android {
     namespace = "com.example.liquidglass"
-    // API 36：RuntimeColorFilter / RuntimeXfermode（AGSL 颜色滤镜与混合模式）
     compileSdk = 36
-    // 锁定 NDK：不指定的话 CI 会用 runner 默认版本，编出的 .so 与本地不一致
     ndkVersion = "28.2.13676358"
 
     defaultConfig {
         minSdk = 24
 
-        // NDK 原生模糊/色差加速（CPU 管线）
         ndk {
             abiFilters += listOf("arm64-v8a", "armeabi-v7a")
         }
 
-        // 16KB 页对齐（Android 16 设备的 ELF 对齐要求；NDK r28 起默认，r27 需显式开启）
         externalNativeBuild {
             cmake {
                 arguments += "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON"
@@ -38,11 +34,12 @@ android {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
     }
-    kotlinOptions {
-        jvmTarget = "21"
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
+        }
     }
 
-    // JitPack / maven-publish：发布 release 变体并附带源码 jar
     publishing {
         singleVariant("release") {
             withSourcesJar()
@@ -52,19 +49,10 @@ android {
 
 dependencies {
     implementation("androidx.core:core-ktx:1.13.1")
-
-    // 只有 LiquidGlassDialogBuilder 用到 AlertDialog / MaterialAlertDialogBuilder。
-    // compileOnly：编译期可见但不写进 POM，使用方不碰这个类就不会被强制拖进
-    // appcompat + material（库其余部分保持只依赖 core-ktx）。
-    // 要用玻璃弹窗的话，使用方自己引入这两个库即可。
     compileOnly("androidx.appcompat:appcompat:1.7.0")
     compileOnly("com.google.android.material:material:1.12.0")
 }
 
-// JitPack 发布配置：
-// 使用方式（consumer 项目）：
-//   repositories { maven { url = uri("https://jitpack.io") } }
-//   dependencies { implementation("com.github.QWEA0:liquidglass:<tag>") }
 afterEvaluate {
     publishing {
         publications {
