@@ -36,10 +36,10 @@ static def getVersionCodeByTimestamp() {
 }
 
 android {
-    namespace 'org.levimc.launcher'
+    namespace 'org.levi.mc.lqg'
     compileSdkVersion 36
     defaultConfig {
-        applicationId "org.levimc.launcher"
+        applicationId "org.levi.mc.lqg"
         minSdkVersion 28
         targetSdkVersion 35
         versionCode getVersionCodeByTimestamp()
