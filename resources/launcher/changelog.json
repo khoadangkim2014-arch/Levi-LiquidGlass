@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "headline": "LeviLauncher 1.26.50 Support",
+  "summary": "This update adds Minecraft 1.26.50 support for inbuilt mods and fixes chat keyboard input.",
+  "sections": [
+    {
+      "title": "Features",
+      "items": [
+        {
+          "text": "Added inbuilt mod support for Minecraft 1.26.50."
+        }
+      ]
+    },
+    {
+      "title": "Fixes",
+      "items": [
+        {
+          "text": "Fixed the chat keyboard closing immediately after opening in Minecraft 1.26.50."
+        }
+      ]
+    }
+  ]
+}
