@@ -121,6 +121,6 @@ jobs:
           tag_name: ${{ github.ref_name }}
           name: "LeviLauncher Unlocked ${{ github.ref_name }}"
           files: ${{ env.APK_OUT }}
-          generate_release_notes: true
+          generate_release_notes: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
