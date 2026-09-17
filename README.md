@@ -1,198 +1,94 @@
-<div align="center">
+# Liquid Glass Integration for LeviLaunchroidUnlocked
 
-![LeviLauncher Logo](https://avatars.githubusercontent.com/u/78095377?s=200&v=4)
+This folder contains the modified files to add liquid glass effects to the LeviLaunchroidUnlocked project using the Liquid Glass library.
 
-# LeviLauncher Unlocked
+## Files Changed
 
-![Banner](https://camo.githubusercontent.com/bd7bd77cb422a267057d9863095b239b096d4f46dc831a37b45867a9acfad697/68747470733a2f2f63617073756c652d72656e6465722e76657263656c2e6170702f6170693f747970653d576176696e6726636f6c6f723d74696d654772616469656e74266865696768743d33303026616e696d6174696f6e3d66616465496e2673656374696f6e3d68656164657226746578743d4c6576694d4326666f6e7453697a653d313230)
+### Project Structure Files
+- `settings.gradle` - Added liquidglass module to the project
+- `app/build.gradle` - Added liquidglass module dependency
+- `liquidglass/build.gradle.kts` - Updated build configuration for the liquidglass library
 
-**A lightweight Android launcher for Minecraft: Bedrock Edition**
+### Layout Files
+- `activity_main.xml` - Applied liquid glass effects to main UI cards:
+  - Main card (top section with launch button)
+  - Mods section card
+  - Content management section card
+  - Miscellaneous section card
 
-[![GitHub Release](https://img.shields.io/github/v/release/LiteLDev/LeviLaunchroid?style=flat-square&color=blue)](https://github.com/LiteLDev/LeviLaunchroid/releases)
-[![License: Apache 2.0](https://img.shields.io/github/license/LiteLDev/LeviLaunchroid)](https://github.com/LiteLDev/LeviLaunchroid/blob/main/LICENSE)
-[![Issues](https://img.shields.io/github/issues/LiteLDev/LeviLaunchroid?style=flat-square&color=red)](https://github.com/LiteLDev/LeviLaunchroid/issues)
-[![Stars](https://img.shields.io/github/stars/LiteLDev/LeviLaunchroid?style=flat-square&color=yellow)](https://github.com/LiteLDev/LeviLaunchroid)
-[![Downloads](https://img.shields.io/github/downloads/LiteLDev/LeviLaunchroid/total.svg)](https://github.com/LiteLDev/LeviLaunchroid/releases)
-[![Android](https://img.shields.io/badge/Android-9.0%2B-green?style=flat-square&logo=android)](https://www.android.com/)
+- `nav_bar.xml` - Navigation bar (can optionally apply liquid glass here too)
 
-</div>
+### Java Files
+- `MainActivity.java` - Updated to support liquid glass view references
 
----
+### Library Module
+- `liquidglass/` - Complete liquidglass library module copied from the reference implementation
 
-## Introduction
+## Installation Instructions
 
-LeviLauncher is a lightweight, open-source Android launcher specifically designed for players of Minecraft: Bedrock Edition (MCBE). It provides a flexible and user-friendly alternative to the standard Google Play installation, allowing you to manage multiple game versions and extend functionality with external modules.
-
-LeviLauncher enables you to import your official Minecraft APK and run it directly without requiring system installation. The launcher supports loading external native modules to enhance gameplay, provides robust multi-version management with complete isolation between installations, and includes built-in tools for managing resource packs and worlds. Whether you're looking to organize different game versions, test modifications, or optimize your gaming experience, LeviLauncher offers the flexibility you need.
-
-### Key Features
-
-- **APK Import & Installation-Free Launching** – Import your official Minecraft APK and run it directly without system installation
-- **SO Module Loading** – Load external native SO modules to extend or enhance Minecraft features and performance
-- **Multi-Version Management & Version Isolation** – Manage multiple Minecraft versions independently, with separated configurations and data
-- **Multiple Xbox Account Management** – Manage multiple Xbox accounts inside the launcher and switch between them seamlessly
-- **Resource Pack & World Management** – Import, export, and back up your resource packs and worlds with the built-in manager
-
----
-
-## System Requirements
-
-Before installing LeviLauncher, ensure your device meets the following minimum specifications:
-
-- **Operating System:** Android 9.0 (API 28) or higher
-- **Device Architecture:** ARM64 (v8a)
-- **RAM:** Minimum 1 GB available RAM (2 GB or more recommended)
-- **Storage:** At least 2 GB of available storage for Minecraft and game data
-
-> **Note:** For optimal performance and stability, we recommend Android 9.0 or higher with at least 3 GB of available RAM and 5 GB of free storage.
-
----
-
-## Installation
-
-### Prerequisites
-
-Before proceeding with LeviLauncher installation, ensure that you have the official Minecraft Bedrock Edition app installed on your device from Google Play. This is required for LeviLauncher to function properly.
-
-### Installation Steps
-
-1. Visit the [Releases Page](https://github.com/LiteLDev/LeviLaunchroid/releases) and download the latest APK build
-2. Open your device Settings and navigate to Security or Applications
-3. Enable "Unknown Sources" or "Allow installation from unknown sources" to permit APK installation
-4. Locate the downloaded APK file using your file manager and tap to install
-5. Grant the necessary permissions when prompted during installation
-6. Once installed, open LeviLauncher from your application drawer
-
-
----
-
-## Development Setup
-
-If you want to build LeviLauncher from source or contribute to development, follow these steps to set up your development environment:
-
-### Prerequisites
-
-- Git installed on your system
-- Android Studio (latest version recommended)
-- Java Development Kit (JDK) 21 or higher
-- Android SDK with API level 28 or higher
-
-### Setup Instructions
-
-1. Clone the LeviLauncher repository:
-
+1. **Copy the liquidglass module** to your project root:
    ```bash
-   git clone https://github.com/0Sombra666/LeviLaunchroidUnlocked.git
+   cp -r liquidglass/ /path/to/your/LeviLaunchroidUnlocked/
    ```
 
-2. Open the project directory in Android Studio
+2. **Update settings.gradle**:
+   - Replace your existing `settings.gradle` with the one in this folder
+   - Or manually add: `include ':liquidglass'`
 
-3. Allow Android Studio to download and install required dependencies and build tools
+3. **Update app/build.gradle**:
+   - Replace your existing `app/build.gradle` with the one in this folder
+   - Or manually add: `implementation project(':liquidglass')`
 
-4. Wait for Gradle to complete the initial sync process
+4. **Update layout files**:
+   - Replace `activity_main.xml` with the one in this folder
+   - Optionally replace `nav_bar.xml` for navigation bar effects
 
-5. Connect your Android device or start an emulator (API 28+)
+5. **Update MainActivity.java**:
+   - The changes in MainActivity.java are minimal and mainly for compatibility
+   - You can merge the changes if needed
 
-6. Click the "Run" button in Android Studio to build and deploy to your device
+## Liquid Glass Effects Applied
 
-7. The app will launch automatically on successful build completion
+The following liquid glass parameters are used:
+- `cornerRadius="16dp"` - Rounded corners for cards
+- `glassTint="#20FFFFFF"` - Light white tint (12% opacity)
+- `glassTintStrength="0.2"` - Glass tint strength
+- `blurAmount="0.0625"` - Background blur amount
+- `displacementScale="70"` - Edge distortion scale
+- `saturation="140"` - Color saturation enhancement
+- `aberrationIntensity="2"` - Chromatic aberration intensity
+- `elasticity="0.15"` - Touch elasticity for press effects
 
-> **Build Tip:** For faster builds during development, use `Build > Make Project` to compile incrementally instead of full rebuilds.
+## Customization
 
----
+You can customize the liquid glass effects by modifying the XML attributes in the layout files:
 
-## Contribution Guidelines
+- Change `glassTint` to use different colors (e.g., `#4C0A84FF` for blue)
+- Adjust `glassTintStrength` for more/less opacity
+- Modify `blurAmount` for different blur levels
+- Change `cornerRadius` for different border radius
 
-We welcome contributions from the community to improve LeviLauncher. To ensure a high-quality codebase and smooth collaboration, please adhere to the following guidelines:
+## Notes
 
-### Code Quality
+- The liquid glass library requires API 24+ (Android 7.0+)
+- The project is configured for API 36 compile SDK
+- The effects work best on devices with good GPU performance
+- Some advanced features like runtime shaders require API 33+
 
-Write clean, modular code with descriptive variable names and consistent formatting. Follow Kotlin and Java style guidelines established in the project. Ensure your code is readable and well-structured for future maintainers.
+## Original Reference
 
-### Commit Structure
+The liquid glass library is based on:
+- https://github.com/QWEA0/Liquid-Glass-Android
+- https://github.com/Kyant0/AndroidLiquidGlass
 
-Use small, focused commits with clear and descriptive messages. Each commit should address a single feature or bug fix. Example: "Fixed memory leak in version manager" or "Added support for ARM32 architecture".
+## Troubleshooting
 
-### Documentation
+If you encounter build issues:
+1. Ensure Java 21 is installed and JAVA_HOME is set
+2. Run `./gradlew clean` before building
+3. Check that the liquidglass module is properly included in settings.gradle
+4. Verify that the NDK version matches between modules
 
-Add comments for complex logic and update relevant documentation in the repository. If you add new features, update the README and any related documentation files.
+## License
 
-### Performance
-
-Optimize all additions to maintain low latency and smooth performance. Test your changes thoroughly to ensure they don't introduce lag or performance regressions.
-
-### Testing
-
-Test all changes on multiple devices and Android versions to ensure compatibility and stability.
-
-### Pull Requests
-
-Submit PRs with a detailed description of changes, including the problem solved or feature added. Reference any related issues and provide screenshots or videos if your changes affect the UI.
-
-### Community Standards
-
-Follow our Code of Conduct to maintain a respectful and inclusive environment. Be constructive in feedback, respect others' work, and communicate professionally with all contributors.
-
-**Before Submitting:** Run a full build cycle and test on at least one device to minimize errors. We review all contributions promptly and appreciate your efforts to enhance LeviLauncher.
-
----
-
-## Usage Guidelines
-
-LeviLauncher is designed for players of Minecraft Bedrock Edition. Please respect the following guidelines and terms of use:
-
-### Permitted Uses
-
-- Modify LeviLauncher for personal gameplay and to test new features
-- Create educational content (videos, tutorials, blog posts) showcasing LeviLauncher's capabilities
-- Fork the repository for learning purposes or to create derivative projects, provided you comply with the Apache License 2.0
-- Share your modified versions with others as long as you comply with the Apache License 2.0 terms
-
-### Prohibited Uses
-
-- Do not claim LeviLauncher as your own without crediting the LeviMC team and its contributors
-- Do not use LeviLauncher to violate Mojang or Microsoft's user agreements
-
-> **Disclaimer:** The authors and contributors of LeviLauncher are not responsible for bans, damages, or issues arising from the use of this software. Use it at your own risk and in accordance with Minecraft's terms of service.
-
-For full legal details, see the LICENSE and NOTICE files in the repository.
-
----
-
-## Credits & Acknowledgements
-
-LeviLauncher would not be possible without the contributions and support of many talented individuals and organizations:
-
-### Special Thanks To
-
-- **LeviMC Organization** – For maintaining the LeviLauncher project and providing infrastructure support
-- **Android Community** – For excellent documentation, libraries, and tools that made this launcher possible
-- **Open Source Community** – For all the libraries, frameworks, and tools that power this project
-- **Contributors** – A heartfelt thank you to all [contributors](https://github.com/LiteLDev/LeviLaunchroid/graphs/contributors) who have continuously improved and maintained LeviLauncher through their time and expertise
-
----
-
-## Contact & Support
-
-**Author / Team:** LeviMC Team
-
-**Project Repository:** [https://github.com/LiteLDev/LeviLaunchroid](https://github.com/LiteLDev/LeviLaunchroid)
-
-**Report Issues:** [GitHub Issues Page](https://github.com/LiteLDev/LeviLaunchroid/issues)
-
-**For support and questions:** Please create an issue on the GitHub repository or contact the LeviMC team directly
-
----
-
-<div align="center">
-
-[![GitHub Release](https://img.shields.io/github/v/release/LiteLDev/LeviLaunchroid?style=flat-square&color=blue)](https://github.com/0Sombra666/LeviLaunchroidUnlocked/releases)
-[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0)
-[![Issues](https://img.shields.io/github/issues/LiteLDev/LeviLaunchroid?style=flat-square&color=red)](https://github.com/LiteLDev/LeviLaunchroid/issues)
-[![Stars](https://img.shields.io/github/stars/LiteLDev/LeviLaunchroid?style=flat-square&color=yellow)](https://github.com/LiteLDev/LeviLaunchroid)
-[![Downloads](https://img.shields.io/github/downloads/LiteLDev/LeviLaunchroid/total.svg)](https://github.com/0Sombra666/LeviLaunchroidUnlocked/releases)
-[![Android](https://img.shields.io/badge/Android-9.0%2B-green?style=flat-square&logo=android)](https://www.android.com/)
-
-**Made with ❤️ by the LeviMC Community**
-
-</div>
+The liquid glass library has its own license. Please review it in the liquidglass folder before distribution.
