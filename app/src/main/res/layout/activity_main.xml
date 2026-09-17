@@ -16,13 +16,24 @@
         android:paddingTop="15dp"
         android:paddingBottom="24dp">
 
-        <LinearLayout
+        <com.example.liquidglass.LiquidGlassView
             android:id="@+id/main_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/card_background"
-            android:orientation="vertical"
-            android:padding="15dp">
+            app:cornerRadius="16dp"
+            app:glassTint="#20FFFFFF"
+            app:glassTintStrength="0.2"
+            app:blurAmount="0.0625"
+            app:displacementScale="70"
+            app:saturation="140"
+            app:aberrationIntensity="2"
+            app:elasticity="0.15">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -173,6 +184,7 @@
                     android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
+        </com.example.liquidglass.LiquidGlassView>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -181,15 +193,26 @@
             android:orientation="horizontal">
 
             <!-- Mods Section -->
-            <LinearLayout
+            <com.example.liquidglass.LiquidGlassView
                 android:id="@+id/mod_card"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/card_background"
-                android:orientation="vertical"
-                android:padding="15dp">
+                app:cornerRadius="16dp"
+                app:glassTint="#20FFFFFF"
+                app:glassTintStrength="0.2"
+                app:blurAmount="0.0625"
+                app:displacementScale="70"
+                app:saturation="140"
+                app:aberrationIntensity="2"
+                app:elasticity="0.15">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="15dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -247,17 +270,29 @@
                         android:orientation="vertical" />
                 </ScrollView>
             </LinearLayout>
+            </com.example.liquidglass.LiquidGlassView>
 
             <!-- Content Management Section -->
-            <LinearLayout
+            <com.example.liquidglass.LiquidGlassView
                 android:id="@+id/content_mgmt_card"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="6dp"
                 android:layout_weight="1.3"
-                android:background="@drawable/card_background"
-                android:orientation="vertical"
-                android:padding="15dp">
+                app:cornerRadius="16dp"
+                app:glassTint="#20FFFFFF"
+                app:glassTintStrength="0.2"
+                app:blurAmount="0.0625"
+                app:displacementScale="70"
+                app:saturation="140"
+                app:aberrationIntensity="2"
+                app:elasticity="0.15">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="15dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -454,17 +489,29 @@
                     </LinearLayout>
                 </ScrollView>
             </LinearLayout>
+            </com.example.liquidglass.LiquidGlassView>
 
             <!-- Miscellaneous Section -->
-            <LinearLayout
+            <com.example.liquidglass.LiquidGlassView
                 android:id="@+id/misc_card"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/card_background"
-                android:orientation="vertical"
-                android:padding="15dp">
+                app:cornerRadius="16dp"
+                app:glassTint="#20FFFFFF"
+                app:glassTintStrength="0.2"
+                app:blurAmount="0.0625"
+                app:displacementScale="70"
+                app:saturation="140"
+                app:aberrationIntensity="2"
+                app:elasticity="0.15">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="15dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -602,6 +649,7 @@
                     </LinearLayout>
                 </ScrollView>
             </LinearLayout>
+            </com.example.liquidglass.LiquidGlassView>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
