@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Glass background with blur effect -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#E6FFFFFF" />
+            <corners android:radius="32dp" />
+        </shape>
+    </item>
+
+    <!-- Gradient for depth -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#30FFFFFF"
+                android:centerColor="#15FFFFFF"
+                android:endColor="#25FFFFFF"
+                android:angle="90" />
+            <corners android:radius="32dp" />
+        </shape>
+    </item>
+
+    <!-- Inner glow -->
+    <item android:top="2dp" android:left="2dp" android:right="2dp" android:bottom="2dp">
+        <shape android:shape="rectangle">
+            <stroke
+                android:width="1dp"
+                android:color="#40FFFFFF" />
+            <corners android:radius="30dp" />
+        </shape>
+    </item>
+
+    <!-- Top highlight line -->
+    <item android:top="0dp" android:left="0dp" android:right="0dp" android:height="2dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#60FFFFFF"
+                android:centerColor="#50FFFFFF"
+                android:endColor="#60FFFFFF"
+                android:angle="0" />
+            <corners
+                android:topLeftRadius="32dp"
+                android:topRightRadius="32dp"
+                android:bottomLeftRadius="0dp"
+                android:bottomRightRadius="0dp" />
+        </shape>
+    </item>
+</layer-list>
