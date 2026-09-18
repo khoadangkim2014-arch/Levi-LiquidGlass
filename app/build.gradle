@@ -141,7 +141,6 @@ android {
 dependencies {
     implementation project(':minecraft')
     implementation project(':pojav_controls')
-    implementation project(':liquidglass')
     implementation libs.minecraftauth
     implementation libs.commons.httpclient
     implementation libs.commons.gson

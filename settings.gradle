@@ -26,4 +26,3 @@ rootProject.name = "levilauncher"
 include ':app'
 include ':minecraft'
 include ':pojav_controls'
-include ':liquidglass'
