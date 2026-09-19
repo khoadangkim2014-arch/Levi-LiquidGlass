@@ -23,6 +23,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.animation.ObjectAnimator;
+import android.animation.AnimatorSet;
+import android.view.animation.OvershootInterpolator;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -116,6 +119,7 @@ public class BaseActivity extends AppCompatActivity {
             return;
         }
 
+        // Wrapper: top nav bar + content below
         LinearLayout wrapper = new LinearLayout(this);
         wrapper.setOrientation(LinearLayout.VERTICAL);
         wrapper.setLayoutParams(new ViewGroup.LayoutParams(
@@ -126,6 +130,7 @@ public class BaseActivity extends AppCompatActivity {
         View navBar = LayoutInflater.from(this).inflate(R.layout.nav_bar, wrapper, false);
         wrapper.addView(navBar);
 
+        // Content fills remaining space; bottom padding reserves space behind floating pill
         LinearLayout.LayoutParams contentParams = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f);
         contentView.setLayoutParams(contentParams);
@@ -134,7 +139,18 @@ public class BaseActivity extends AppCompatActivity {
         contentView.setAlpha(0f);
         contentView.setTranslationY(8f * getResources().getDisplayMetrics().density);
 
+        // Set wrapper as the content view first
         super.setContentView(wrapper);
+
+        // Now inject the floating pill into the window's decor FrameLayout
+        // This guarantees it truly floats above all activity content
+        android.widget.FrameLayout decor = (android.widget.FrameLayout) getWindow().getDecorView();
+        View pill = LayoutInflater.from(this).inflate(R.layout.nav_pill, decor, false);
+        android.widget.FrameLayout.LayoutParams pillParams = new android.widget.FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+        );
+        decor.addView(pill, pillParams);
         navBarInjected = true;
         setupBaseNavBar();
 
@@ -147,6 +163,16 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     private void applyPersonalization() {
+        // Apply orientation
+        PersonalizationManager pm0 = new PersonalizationManager(this);
+        int ori = pm0.getOrientation();
+        if (ori == PersonalizationManager.ORIENTATION_PORTRAIT) {
+            setRequestedOrientation(android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } else if (ori == PersonalizationManager.ORIENTATION_LANDSCAPE) {
+            setRequestedOrientation(android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        } else {
+            setRequestedOrientation(android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        }
         PersonalizationManager pm = new PersonalizationManager(this);
         pm.applyToActivity(this);
     }
@@ -370,20 +396,63 @@ public class BaseActivity extends AppCompatActivity {
         PersonalizationManager pm = new PersonalizationManager(this);
         int accent = pm.getAccentColor();
 
-        for (int id : tabIds) {
+        int activeIndex = -1;
+        for (int i = 0; i < tabIds.length; i++) {
+            int id = tabIds[i];
             TextView tab = findViewById(id);
             if (tab == null) continue;
+            boolean isActive = (id == activeTabId);
+            if (isActive) activeIndex = i;
+
             int color;
-            if (id == activeTabId) {
+            if (isActive) {
                 color = accent != 0 ? accent : getResources().getColor(R.color.on_surface, getTheme());
-                tab.setTextColor(color);
                 tab.setTypeface(tab.getTypeface(), android.graphics.Typeface.BOLD);
+                // Bounce scale animation on active tab
+                AnimatorSet bounce = new AnimatorSet();
+                bounce.playTogether(
+                    ObjectAnimator.ofFloat(tab, "scaleX", 1f, 1.18f, 1f),
+                    ObjectAnimator.ofFloat(tab, "scaleY", 1f, 1.18f, 1f)
+                );
+                bounce.setDuration(320);
+                bounce.setInterpolator(new OvershootInterpolator(2.5f));
+                bounce.start();
             } else {
                 color = getResources().getColor(R.color.text_secondary, getTheme());
-                tab.setTextColor(color);
                 tab.setTypeface(tab.getTypeface(), android.graphics.Typeface.NORMAL);
+                tab.setScaleX(1f);
+                tab.setScaleY(1f);
             }
+            tab.setTextColor(color);
             TextViewCompat.setCompoundDrawableTintList(tab, ColorStateList.valueOf(color));
+        }
+
+        // Slide the active pill indicator
+        if (activeIndex >= 0) {
+            final int finalIndex = activeIndex;
+            View indicator = findViewById(R.id.nav_tab_active_indicator);
+            if (indicator != null) {
+                indicator.setVisibility(View.VISIBLE);
+                // Wait for layout to measure tab widths
+                indicator.post(() -> {
+                    TextView firstTab = findViewById(tabIds[0]);
+                    if (firstTab == null) return;
+                    int tabWidth = firstTab.getWidth();
+                    int pillWidth = tabWidth - 12;
+                    int targetX = finalIndex * tabWidth + 6;
+
+                    // Resize pill to match tab
+                    android.view.ViewGroup.LayoutParams lp = indicator.getLayoutParams();
+                    lp.width = pillWidth;
+                    indicator.setLayoutParams(lp);
+
+                    // Animate X position with spring feel
+                    ObjectAnimator slide = ObjectAnimator.ofFloat(indicator, "translationX", targetX);
+                    slide.setDuration(350);
+                    slide.setInterpolator(new OvershootInterpolator(1.8f));
+                    slide.start();
+                });
+            }
         }
     }
 
@@ -518,3 +587,6 @@ public class BaseActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 }
+
+
+

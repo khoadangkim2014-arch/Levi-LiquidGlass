@@ -40,6 +40,14 @@ public class PersonalizationManager {
     private static final String KEY_ACCENT_COLOR = "accent_color";
     private static final String KEY_BG_IMAGE_PATH = "bg_image_path";
     private static final String KEY_BG_IMAGE_BLUR = "bg_image_blur";
+    private static final String KEY_ORIENTATION = "screen_orientation";
+    public static final int ORIENTATION_AUTO      = 0;
+    public static final int ORIENTATION_PORTRAIT  = 1;
+    public static final int ORIENTATION_LANDSCAPE = 2;
+    private static final String KEY_ORIENTATION = "screen_orientation";
+    public static final int ORIENTATION_AUTO      = 0;
+    public static final int ORIENTATION_PORTRAIT  = 1;
+    public static final int ORIENTATION_LANDSCAPE = 2;
     private static final String KEY_BG_IMAGE_BRIGHTNESS = "bg_image_brightness";
 
     public static final int BG_BLUR_MIN = 0;
@@ -629,6 +637,14 @@ public class PersonalizationManager {
         int accent = getAccentColor();
         if (accent == 0) return;
         applyAccentColorRecursive(view, accent, context);
+    }
+
+    public int getOrientation() {
+        return prefs.getInt(KEY_ORIENTATION, ORIENTATION_AUTO);
+    }
+
+    public void setOrientation(int orientation) {
+        prefs.edit().putInt(KEY_ORIENTATION, orientation).apply();
     }
 
     private boolean isDarkMode(Activity activity) {

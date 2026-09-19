@@ -24,6 +24,9 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Spinner;
+import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
@@ -73,6 +76,7 @@ public class SettingsActivity extends BaseActivity {
     private int selectedTabIndex = 0;
 
     private PersonalizationManager personalizationManager;
+    private Spinner spinnerOrientation;
     private LinearLayout colorGridContainer;
     private LinearLayout moreColorsContainer;
     private TextView bgImageStatus;
@@ -96,6 +100,30 @@ public class SettingsActivity extends BaseActivity {
         setupNavBar();
 
         personalizationManager = new PersonalizationManager(this);
+        spinnerOrientation = findViewById(R.id.spinner_orientation);
+        if (spinnerOrientation != null) {
+            ArrayAdapter<CharSequence> orientAdapter = ArrayAdapter.createFromResource(
+                this, R.array.orientation_options, android.R.layout.simple_spinner_item);
+            orientAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerOrientation.setAdapter(orientAdapter);
+            spinnerOrientation.setSelection(personalizationManager.getOrientation(), false);
+            spinnerOrientation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, android.view.View view, int pos, long id) {
+                    personalizationManager.setOrientation(pos);
+                    // Apply immediately
+                    if (pos == PersonalizationManager.ORIENTATION_PORTRAIT) {
+                        setRequestedOrientation(android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                    } else if (pos == PersonalizationManager.ORIENTATION_LANDSCAPE) {
+                        setRequestedOrientation(android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                    } else {
+                        setRequestedOrientation(android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+                    }
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {}
+            });
+        }
 
         if (savedInstanceState != null) {
             selectedTabIndex = savedInstanceState.getInt(KEY_SELECTED_TAB, 0);

@@ -13,6 +13,8 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Build;
+import android.graphics.RenderEffect;
+import android.graphics.Shader;
 import android.os.IBinder;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -1597,7 +1599,43 @@ import okhttp3.OkHttpClient;
 
     private void setupNavBar() {
         setActiveNavTab(R.id.nav_tab_launch);
-        findViewById(R.id.nav_tab_launch).setOnClickListener(v -> {});
+
+        TextView launchTab = findViewById(R.id.nav_tab_launch);
+        TextView instancesTab = findViewById(R.id.nav_tab_instances);
+        TextView aboutTab = findViewById(R.id.nav_tab_about);
+        TextView settingsTab = findViewById(R.id.nav_tab_settings);
+
+        if (launchTab != null) {
+            launchTab.setOnClickListener(v -> {
+                setActiveNavTab(R.id.nav_tab_launch);
+                // Launch tab clicked
+            });
+        }
+        if (instancesTab != null) {
+            instancesTab.setOnClickListener(v -> {
+                setActiveNavTab(R.id.nav_tab_instances);
+                startActivity(new Intent(this, InstancesActivity.class));
+            });
+        }
+        if (aboutTab != null) {
+            aboutTab.setOnClickListener(v -> {
+                setActiveNavTab(R.id.nav_tab_about);
+                startActivity(new Intent(this, AboutActivity.class));
+            });
+        }
+        if (settingsTab != null) {
+            settingsTab.setOnClickListener(v -> {
+                setActiveNavTab(R.id.nav_tab_settings);
+                startActivity(new Intent(this, SettingsActivity.class));
+            });
+        }
+
+        applyGlassBlur();
+    }
+
+    private void applyGlassBlur() {
+        // RenderEffect blurs the card content itself, not the background behind it.
+        // The frosted glass look is achieved via the drawable bg_liquid_glass instead.
     }
 
     @Override
@@ -1609,3 +1647,5 @@ import okhttp3.OkHttpClient;
     }
 
  }
+
+
