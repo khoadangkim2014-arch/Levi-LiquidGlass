@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/nav_pill_overlay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:clickable="false"
+    android:focusable="false">
+
+    <!-- Floating pill tab bar anchored to bottom -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/bg_liquid_glass_tab"
+        android:elevation="16dp"
+        android:translationZ="16dp">
+
+        <!-- Active pill indicator -->
+        <View
+            android:id="@+id/nav_tab_active_indicator"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="6dp"
+            android:background="@drawable/bg_tab_active_pill"
+            android:visibility="invisible" />
+
+        <!-- Tab row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/nav_tab_launch"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingHorizontal="4dp"
+                android:fontFamily="@font/misans"
+                android:text="@string/nav_launch"
+                android:textColor="@color/on_surface"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:drawableTop="@drawable/ic_nav_launch"
+                android:drawablePadding="2dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <TextView
+                android:id="@+id/nav_tab_instances"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingHorizontal="4dp"
+                android:fontFamily="@font/misans"
+                android:text="@string/nav_instances"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp"
+                android:drawableTop="@drawable/ic_nav_instances"
+                android:drawablePadding="2dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <TextView
+                android:id="@+id/nav_tab_about"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingHorizontal="4dp"
+                android:fontFamily="@font/misans"
+                android:text="@string/nav_about"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp"
+                android:drawableTop="@drawable/ic_nav_about"
+                android:drawablePadding="2dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <TextView
+                android:id="@+id/nav_tab_settings"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingHorizontal="4dp"
+                android:fontFamily="@font/misans"
+                android:text="@string/nav_settings"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp"
+                android:drawableTop="@drawable/ic_nav_settings"
+                android:drawablePadding="2dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true" />
+
+        </LinearLayout>
+    </FrameLayout>
+</FrameLayout>
