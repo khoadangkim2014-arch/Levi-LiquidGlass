@@ -23,6 +23,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.animation.ObjectAnimator;
+import android.animation.AnimatorSet;
+import android.view.animation.OvershootInterpolator;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -370,20 +373,63 @@ public class BaseActivity extends AppCompatActivity {
         PersonalizationManager pm = new PersonalizationManager(this);
         int accent = pm.getAccentColor();
 
-        for (int id : tabIds) {
+        int activeIndex = -1;
+        for (int i = 0; i < tabIds.length; i++) {
+            int id = tabIds[i];
             TextView tab = findViewById(id);
             if (tab == null) continue;
+            boolean isActive = (id == activeTabId);
+            if (isActive) activeIndex = i;
+
             int color;
-            if (id == activeTabId) {
+            if (isActive) {
                 color = accent != 0 ? accent : getResources().getColor(R.color.on_surface, getTheme());
-                tab.setTextColor(color);
                 tab.setTypeface(tab.getTypeface(), android.graphics.Typeface.BOLD);
+                // Bounce scale animation on active tab
+                AnimatorSet bounce = new AnimatorSet();
+                bounce.playTogether(
+                    ObjectAnimator.ofFloat(tab, "scaleX", 1f, 1.18f, 1f),
+                    ObjectAnimator.ofFloat(tab, "scaleY", 1f, 1.18f, 1f)
+                );
+                bounce.setDuration(320);
+                bounce.setInterpolator(new OvershootInterpolator(2.5f));
+                bounce.start();
             } else {
                 color = getResources().getColor(R.color.text_secondary, getTheme());
-                tab.setTextColor(color);
                 tab.setTypeface(tab.getTypeface(), android.graphics.Typeface.NORMAL);
+                tab.setScaleX(1f);
+                tab.setScaleY(1f);
             }
+            tab.setTextColor(color);
             TextViewCompat.setCompoundDrawableTintList(tab, ColorStateList.valueOf(color));
+        }
+
+        // Slide the active pill indicator
+        if (activeIndex >= 0) {
+            final int finalIndex = activeIndex;
+            View indicator = findViewById(R.id.nav_tab_active_indicator);
+            if (indicator != null) {
+                indicator.setVisibility(View.VISIBLE);
+                // Wait for layout to measure tab widths
+                indicator.post(() -> {
+                    TextView firstTab = findViewById(tabIds[0]);
+                    if (firstTab == null) return;
+                    int tabWidth = firstTab.getWidth();
+                    int pillWidth = tabWidth - 12;
+                    int targetX = finalIndex * tabWidth + 6;
+
+                    // Resize pill to match tab
+                    android.view.ViewGroup.LayoutParams lp = indicator.getLayoutParams();
+                    lp.width = pillWidth;
+                    indicator.setLayoutParams(lp);
+
+                    // Animate X position with spring feel
+                    ObjectAnimator slide = ObjectAnimator.ofFloat(indicator, "translationX", targetX);
+                    slide.setDuration(350);
+                    slide.setInterpolator(new OvershootInterpolator(1.8f));
+                    slide.start();
+                });
+            }
         }
     }
 
@@ -518,3 +564,4 @@ public class BaseActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 }
+
