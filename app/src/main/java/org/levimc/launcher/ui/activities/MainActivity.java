@@ -1599,6 +1599,37 @@ import okhttp3.OkHttpClient;
 
     private void setupNavBar() {
         setActiveNavTab(R.id.nav_tab_launch);
+
+        TextView launchTab = findViewById(R.id.nav_tab_launch);
+        TextView instancesTab = findViewById(R.id.nav_tab_instances);
+        TextView aboutTab = findViewById(R.id.nav_tab_about);
+        TextView settingsTab = findViewById(R.id.nav_tab_settings);
+
+        if (launchTab != null) {
+            launchTab.setOnClickListener(v -> {
+                setActiveNavTab(R.id.nav_tab_launch);
+                Toast.makeText(this, "Launch", Toast.LENGTH_SHORT).show();
+            });
+        }
+        if (instancesTab != null) {
+            instancesTab.setOnClickListener(v -> {
+                setActiveNavTab(R.id.nav_tab_instances);
+                startActivity(new Intent(this, InstancesActivity.class));
+            });
+        }
+        if (aboutTab != null) {
+            aboutTab.setOnClickListener(v -> {
+                setActiveNavTab(R.id.nav_tab_about);
+                startActivity(new Intent(this, AboutActivity.class));
+            });
+        }
+        if (settingsTab != null) {
+            settingsTab.setOnClickListener(v -> {
+                setActiveNavTab(R.id.nav_tab_settings);
+                startActivity(new Intent(this, SettingsActivity.class));
+            });
+        }
+
         applyGlassBlur();
     }
 
