@@ -119,6 +119,7 @@ public class BaseActivity extends AppCompatActivity {
             return;
         }
 
+        // Wrapper: top nav bar + content below
         LinearLayout wrapper = new LinearLayout(this);
         wrapper.setOrientation(LinearLayout.VERTICAL);
         wrapper.setLayoutParams(new ViewGroup.LayoutParams(
@@ -131,13 +132,36 @@ public class BaseActivity extends AppCompatActivity {
 
         LinearLayout.LayoutParams contentParams = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f);
+        // Add bottom padding so content doesn't hide behind the floating pill (52dp pill + 20dp margin + 20dp buffer)
+        contentView.setPadding(
+                contentView.getPaddingLeft(),
+                contentView.getPaddingTop(),
+                contentView.getPaddingRight(),
+                (int)(92 * getResources().getDisplayMetrics().density)
+        );
         contentView.setLayoutParams(contentParams);
         wrapper.addView(contentView);
 
         contentView.setAlpha(0f);
         contentView.setTranslationY(8f * getResources().getDisplayMetrics().density);
 
-        super.setContentView(wrapper);
+        // Root FrameLayout that holds wrapper + floating pill overlay
+        android.widget.FrameLayout root = new android.widget.FrameLayout(this);
+        root.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+        ));
+        root.addView(wrapper);
+
+        // Inflate floating pill and add as overlay
+        View pill = LayoutInflater.from(this).inflate(R.layout.nav_pill, root, false);
+        android.widget.FrameLayout.LayoutParams pillParams = new android.widget.FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+        );
+        root.addView(pill, pillParams);
+
+        super.setContentView(root);
         navBarInjected = true;
         setupBaseNavBar();
 
@@ -564,4 +588,5 @@ public class BaseActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 }
+
 
