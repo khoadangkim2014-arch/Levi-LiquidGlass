@@ -130,38 +130,27 @@ public class BaseActivity extends AppCompatActivity {
         View navBar = LayoutInflater.from(this).inflate(R.layout.nav_bar, wrapper, false);
         wrapper.addView(navBar);
 
+        // Content fills remaining space; bottom padding reserves space behind floating pill
         LinearLayout.LayoutParams contentParams = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f);
-        // Add bottom padding so content doesn't hide behind the floating pill (52dp pill + 20dp margin + 20dp buffer)
-        contentView.setPadding(
-                contentView.getPaddingLeft(),
-                contentView.getPaddingTop(),
-                contentView.getPaddingRight(),
-                (int)(92 * getResources().getDisplayMetrics().density)
-        );
         contentView.setLayoutParams(contentParams);
         wrapper.addView(contentView);
 
         contentView.setAlpha(0f);
         contentView.setTranslationY(8f * getResources().getDisplayMetrics().density);
 
-        // Root FrameLayout that holds wrapper + floating pill overlay
-        android.widget.FrameLayout root = new android.widget.FrameLayout(this);
-        root.setLayoutParams(new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-        ));
-        root.addView(wrapper);
+        // Set wrapper as the content view first
+        super.setContentView(wrapper);
 
-        // Inflate floating pill and add as overlay
-        View pill = LayoutInflater.from(this).inflate(R.layout.nav_pill, root, false);
+        // Now inject the floating pill into the window's decor FrameLayout
+        // This guarantees it truly floats above all activity content
+        android.widget.FrameLayout decor = (android.widget.FrameLayout) getWindow().getDecorView();
+        View pill = LayoutInflater.from(this).inflate(R.layout.nav_pill, decor, false);
         android.widget.FrameLayout.LayoutParams pillParams = new android.widget.FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
         );
-        root.addView(pill, pillParams);
-
-        super.setContentView(root);
+        decor.addView(pill, pillParams);
         navBarInjected = true;
         setupBaseNavBar();
 
@@ -588,5 +577,6 @@ public class BaseActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 }
+
 
 
