@@ -1608,7 +1608,7 @@ import okhttp3.OkHttpClient;
         if (launchTab != null) {
             launchTab.setOnClickListener(v -> {
                 setActiveNavTab(R.id.nav_tab_launch);
-                Toast.makeText(this, "Launch", Toast.LENGTH_SHORT).show();
+                // Launch tab clicked
             });
         }
         if (instancesTab != null) {
@@ -1634,19 +1634,8 @@ import okhttp3.OkHttpClient;
     }
 
     private void applyGlassBlur() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return;
-        int[] cardIds = {
-            R.id.main_card, R.id.mod_card,
-            R.id.content_mgmt_card, R.id.misc_card
-        };
-        for (int id : cardIds) {
-            View card = findViewById(id);
-            if (card == null) continue;
-            // Apply background blur behind each card
-            card.setRenderEffect(
-                RenderEffect.createBlurEffect(18f, 18f, Shader.TileMode.CLAMP)
-            );
-        }
+        // RenderEffect blurs the card content itself, not the background behind it.
+        // The frosted glass look is achieved via the drawable bg_liquid_glass instead.
     }
 
     @Override
@@ -1658,4 +1647,5 @@ import okhttp3.OkHttpClient;
     }
 
  }
+
 
