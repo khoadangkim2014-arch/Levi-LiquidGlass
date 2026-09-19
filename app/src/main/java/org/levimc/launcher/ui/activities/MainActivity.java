@@ -1599,75 +1599,7 @@ import okhttp3.OkHttpClient;
 
     private void setupNavBar() {
         setActiveNavTab(R.id.nav_tab_launch);
-
-        TextView launchTab = findViewById(R.id.nav_tab_launch);
-        TextView instancesTab = findViewById(R.id.nav_tab_instances);
-        TextView aboutTab = findViewById(R.id.nav_tab_about);
-        TextView settingsTab = findViewById(R.id.nav_tab_settings);
-
-        if (launchTab != null) launchTab.setOnClickListener(v -> {});
-        if (instancesTab != null) instancesTab.setOnClickListener(v -> {
-            startActivity(new Intent(this, InstancesActivity.class));
-        });
-        if (aboutTab != null) aboutTab.setOnClickListener(v -> {
-            startActivity(new Intent(this, AboutActivity.class));
-        });
-        if (settingsTab != null) settingsTab.setOnClickListener(v -> {
-            startActivity(new Intent(this, SettingsActivity.class));
-        });
-
         applyGlassBlur();
-    }
-
-    private void setActiveNavTab(int activeTabId) {
-        TextView launchTab = findViewById(R.id.nav_tab_launch);
-        TextView instancesTab = findViewById(R.id.nav_tab_instances);
-        TextView aboutTab = findViewById(R.id.nav_tab_about);
-        TextView settingsTab = findViewById(R.id.nav_tab_settings);
-        View activeIndicator = findViewById(R.id.nav_tab_active_indicator);
-
-        TextView[] tabs = {launchTab, instancesTab, aboutTab, settingsTab};
-        int[] tabIds = {R.id.nav_tab_launch, R.id.nav_tab_instances, R.id.nav_tab_about, R.id.nav_tab_settings};
-
-        for (int i = 0; i < tabs.length; i++) {
-            if (tabs[i] == null) continue;
-            boolean isActive = tabIds[i] == activeTabId;
-            tabs[i].setTextColor(isActive ? ContextCompat.getColor(this, R.color.primary)
-                    : ContextCompat.getColor(this, R.color.text_secondary));
-            tabs[i].setAlpha(isActive ? 1.0f : 0.5f);
-        }
-
-        if (activeIndicator != null) {
-            int targetX = getTabCenterX(activeTabId);
-            if (targetX >= 0) {
-                activeIndicator.setAlpha(0f);
-                activeIndicator.setTranslationX(targetX);
-                activeIndicator.animate()
-                        .alpha(1f)
-                        .setDuration(280)
-                        .setStartDelay(0)
-                        .start();
-            }
-        }
-    }
-
-    private int getTabCenterX(int tabId) {
-        TextView tab = findViewById(tabId);
-        View activeIndicator = findViewById(R.id.nav_tab_active_indicator);
-        if (tab == null || activeIndicator == null) return -1;
-
-        tab.measure(View.measureSpec(0, 0), View.measureSpec(0, 0));
-        int tabWidth = tab.getMeasuredWidth();
-        int indicatorWidth = activeIndicator.getWidth() > 0 ? activeIndicator.getWidth()
-                : (int) (36 * getResources().getDisplayMetrics().density);
-
-        int[] tabLocation = new int[2];
-        tab.getLocationOnScreen(tabLocation);
-
-        int[] indicatorLocation = new int[2];
-        activeIndicator.getLocationOnScreen(indicatorLocation);
-
-        return (tabLocation[0] - indicatorLocation[0]) + (tabWidth - indicatorWidth) / 2;
     }
 
     private void applyGlassBlur() {
