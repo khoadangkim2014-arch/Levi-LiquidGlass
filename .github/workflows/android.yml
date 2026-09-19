@@ -33,7 +33,7 @@ jobs:
                 "client_info": {
                   "mobilesdk_app_id": "1:000000000000:android:0000000000000000000000",
                   "android_client_info": {
-                    "package_name": "org.levimc.launcher"
+                    "package_name": "org.levi.mc.lqg"
                   }
                 },
                 "oauth_client": [],

@@ -337,8 +337,13 @@ class GamePackageManager private constructor(
         if (!file.setReadable(true, true) && !file.canRead()) {
             throw IOException("Failed to mark file readable: ${file.absolutePath}")
         }
-        if (!file.setReadOnly() && file.canWrite()) {
-            throw IOException("Failed to keep file read-only: ${file.absolutePath}")
+        try {
+            if (!file.setReadOnly()) {
+                Log.w(TAG, "setReadOnly failed (non-fatal): ${file.absolutePath}")
+            }
+        } catch (e: Exception) {
+            // setReadOnly is best-effort on Android 10+ scoped storage
+            Log.w(TAG, "setReadOnly failed (non-fatal): ${file.absolutePath}: ${e.message}")
         }
     }
 
