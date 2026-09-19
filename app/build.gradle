@@ -12,6 +12,12 @@ if (localPropertiesFile.exists()) {
 }
 
 def getGitTag() {
+    // First try GITHUB_REF_NAME (set by GitHub Actions when triggered by a tag push)
+    def envTag = System.getenv("GITHUB_REF_NAME")
+    if (envTag != null && !envTag.isEmpty()) {
+        return envTag.startsWith("v") ? envTag.substring(1) : envTag
+    }
+    // Fallback to git describe
     def tag = "unknown"
     try {
         def stdout = new ByteArrayOutputStream()
@@ -43,7 +49,7 @@ android {
         minSdkVersion 28
         targetSdkVersion 35
         versionCode getVersionCodeByTimestamp()
-        versionName "1.5.24"
+        versionName getGitTag().equals("unknown") ? "1.5.24" : getGitTag()
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "CURSEFORGE_API_KEY", "\"${localProperties.getProperty('curseforge.api_key', '')}\""
         ndk {
