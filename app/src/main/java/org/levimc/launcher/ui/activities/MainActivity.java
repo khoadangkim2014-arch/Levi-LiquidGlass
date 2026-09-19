@@ -13,6 +13,8 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Build;
+import android.graphics.RenderEffect;
+import android.graphics.Shader;
 import android.os.IBinder;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -1597,7 +1599,25 @@ import okhttp3.OkHttpClient;
 
     private void setupNavBar() {
         setActiveNavTab(R.id.nav_tab_launch);
-        findViewById(R.id.nav_tab_launch).setOnClickListener(v -> {});
+        View launchTab = findViewById(R.id.nav_tab_launch);
+        if (launchTab != null) launchTab.setOnClickListener(v -> {});
+        applyGlassBlur();
+    }
+
+    private void applyGlassBlur() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return;
+        int[] cardIds = {
+            R.id.main_card, R.id.mod_card,
+            R.id.content_mgmt_card, R.id.misc_card
+        };
+        for (int id : cardIds) {
+            View card = findViewById(id);
+            if (card == null) continue;
+            // Apply background blur behind each card
+            card.setRenderEffect(
+                RenderEffect.createBlurEffect(18f, 18f, Shader.TileMode.CLAMP)
+            );
+        }
     }
 
     @Override
@@ -1609,3 +1629,4 @@ import okhttp3.OkHttpClient;
     }
 
  }
+
