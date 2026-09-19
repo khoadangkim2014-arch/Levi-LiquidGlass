@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Background blur effect -->
+    <!-- Frosted glass base: semi-transparent white -->
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="#F0FFFFFF" />
+            <solid android:color="#CCFFFFFF" />
             <corners android:radius="24dp" />
         </shape>
     </item>
-
-    <!-- Subtle gradient for glass effect -->
-    <item>
+    <!-- Top highlight streak -->
+    <item android:top="0dp" android:left="0dp" android:right="0dp" android:bottom="0dp">
         <shape android:shape="rectangle">
             <gradient
-                android:startColor="#20FFFFFF"
-                android:centerColor="#10FFFFFF"
-                android:endColor="#15FFFFFF"
-                android:angle="135" />
+                android:startColor="#50FFFFFF"
+                android:endColor="#00FFFFFF"
+                android:angle="270" />
             <corners android:radius="24dp" />
         </shape>
     </item>
-
-    <!-- Top highlight -->
-    <item android:top="0dp" android:left="0dp" android:right="0dp" android:height="1dp">
+    <!-- Thin top border highlight -->
+    <item android:top="0dp" android:left="0dp" android:right="0dp" android:height="1.5dp">
         <shape android:shape="rectangle">
-            <solid android:color="#40FFFFFF" />
+            <solid android:color="#90FFFFFF" />
+            <corners android:topLeftRadius="24dp" android:topRightRadius="24dp"
+                android:bottomLeftRadius="0dp" android:bottomRightRadius="0dp"/>
         </shape>
     </item>
-
-    <!-- Bottom shadow -->
-    <item android:bottom="0dp" android:left="0dp" android:right="0dp" android:height="1dp">
+    <!-- Thin left border highlight -->
+    <item android:top="0dp" android:left="0dp" android:bottom="0dp" android:width="1.5dp">
         <shape android:shape="rectangle">
-            <solid android:color="#10FFFFFF" />
+            <solid android:color="#60FFFFFF" />
+            <corners android:topLeftRadius="24dp" android:topRightRadius="0dp"
+                android:bottomLeftRadius="24dp" android:bottomRightRadius="0dp"/>
         </shape>
     </item>
 </layer-list>
