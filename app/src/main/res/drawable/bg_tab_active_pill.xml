@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Active tab pill indicator -->
+    <!-- Outer shadow for floating lift -->
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="#20000000" />
+            <solid android:color="#40000000" />
             <corners android:radius="20dp" />
         </shape>
     </item>
-    <item android:top="0dp" android:left="0dp" android:right="0dp" android:bottom="0dp">
+    <!-- Dark frosted base so it pops against the glass -->
+    <item android:top="1dp" android:left="1dp" android:right="1dp" android:bottom="1dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#3D000000" />
+            <corners android:radius="19dp" />
+        </shape>
+    </item>
+    <!-- Top gloss gradient -->
+    <item android:top="1dp" android:left="1dp" android:right="1dp" android:bottom="1dp">
         <shape android:shape="rectangle">
             <gradient
-                android:startColor="#18FFFFFF"
+                android:startColor="#55FFFFFF"
                 android:endColor="#00FFFFFF"
                 android:angle="270" />
-            <corners android:radius="20dp" />
+            <corners android:radius="19dp" />
         </shape>
     </item>
-    <item android:top="0dp" android:left="1dp" android:right="1dp" android:height="0.5dp">
+    <!-- Top highlight line -->
+    <item android:top="1dp" android:left="3dp" android:right="3dp" android:height="1dp">
         <shape android:shape="rectangle">
-            <solid android:color="#50FFFFFF" />
+            <solid android:color="#80FFFFFF" />
         </shape>
     </item>
 </layer-list>
