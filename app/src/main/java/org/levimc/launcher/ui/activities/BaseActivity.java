@@ -154,6 +154,17 @@ public class BaseActivity extends AppCompatActivity {
         navBarInjected = true;
         setupBaseNavBar();
 
+        // Apply orientation once at activity creation
+        PersonalizationManager pmOri = new PersonalizationManager(this);
+        int ori = pmOri.getOrientation();
+        if (ori == PersonalizationManager.ORIENTATION_PORTRAIT) {
+            setRequestedOrientation(android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } else if (ori == PersonalizationManager.ORIENTATION_LANDSCAPE) {
+            setRequestedOrientation(android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        } else {
+            setRequestedOrientation(android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        }
+
         applyPersonalization();
 
         contentView.post(() -> {
@@ -163,16 +174,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     private void applyPersonalization() {
-        // Apply orientation
-        PersonalizationManager pm0 = new PersonalizationManager(this);
-        int ori = pm0.getOrientation();
-        if (ori == PersonalizationManager.ORIENTATION_PORTRAIT) {
-            setRequestedOrientation(android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        } else if (ori == PersonalizationManager.ORIENTATION_LANDSCAPE) {
-            setRequestedOrientation(android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        } else {
-            setRequestedOrientation(android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-        }
+
         PersonalizationManager pm = new PersonalizationManager(this);
         pm.applyToActivity(this);
     }

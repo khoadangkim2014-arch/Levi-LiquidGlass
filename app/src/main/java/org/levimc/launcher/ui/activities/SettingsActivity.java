@@ -176,24 +176,25 @@ public class SettingsActivity extends BaseActivity {
         tabPersonalize = findViewById(R.id.tab_personalize);
         tabUpdates = findViewById(R.id.tab_updates);
         tabMigration = findViewById(R.id.tab_migration);
-        tabAbout = findViewById(R.id.tab_about);
+        tabDisplay = findViewById(R.id.tab_display);
 
         sectionBasic = findViewById(R.id.section_basic);
         sectionPersonalize = findViewById(R.id.section_personalize);
         sectionUpdates = findViewById(R.id.section_updates);
         sectionMigration = findViewById(R.id.section_migration);
         sectionAbout = findViewById(R.id.section_about);
+        sectionDisplay = findViewById(R.id.section_display);
 
         tabBasic.setOnClickListener(v -> { selectedTabIndex = 0; selectTab(tabBasic); });
         tabPersonalize.setOnClickListener(v -> { selectedTabIndex = 1; selectTab(tabPersonalize); });
         tabUpdates.setOnClickListener(v -> { selectedTabIndex = 2; selectTab(tabUpdates); });
-        tabAbout.setOnClickListener(v -> { selectedTabIndex = 3; selectTab(tabAbout); });
+        tabDisplay.setOnClickListener(v -> { selectedTabIndex = 3; selectTab(tabDisplay); });
         tabMigration.setOnClickListener(v -> { selectedTabIndex = 4; selectTab(tabMigration); });
     }
 
     private void selectTab(TextView selectedTab) {
         TextView[] tabs = getSettingsTabs();
-        View[] sections = {sectionBasic, sectionPersonalize, sectionUpdates, sectionAbout, sectionMigration};
+        View[] sections = {sectionBasic, sectionPersonalize, sectionUpdates, sectionDisplay, sectionMigration, sectionAbout};
 
         int accent = personalizationManager.getAccentColor();
 
@@ -228,7 +229,7 @@ public class SettingsActivity extends BaseActivity {
     }
 
     private TextView[] getSettingsTabs() {
-        return new TextView[]{tabBasic, tabPersonalize, tabUpdates, tabAbout, tabMigration};
+        return new TextView[]{tabBasic, tabPersonalize, tabUpdates, tabDisplay, tabMigration, tabAbout};
     }
 
     private void setupBasicSection() {
@@ -920,3 +921,4 @@ public class SettingsActivity extends BaseActivity {
         return String.format(Locale.getDefault(), "%.1f GB", mb / 1024.0);
     }
 }
+
