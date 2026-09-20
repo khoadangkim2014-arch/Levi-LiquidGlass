@@ -177,6 +177,7 @@ public class SettingsActivity extends BaseActivity {
         tabUpdates = findViewById(R.id.tab_updates);
         tabMigration = findViewById(R.id.tab_migration);
         tabDisplay = findViewById(R.id.tab_display);
+        tabAbout = findViewById(R.id.tab_about);
 
         sectionBasic = findViewById(R.id.section_basic);
         sectionPersonalize = findViewById(R.id.section_personalize);
@@ -190,6 +191,7 @@ public class SettingsActivity extends BaseActivity {
         tabUpdates.setOnClickListener(v -> { selectedTabIndex = 2; selectTab(tabUpdates); });
         tabDisplay.setOnClickListener(v -> { selectedTabIndex = 3; selectTab(tabDisplay); });
         tabMigration.setOnClickListener(v -> { selectedTabIndex = 4; selectTab(tabMigration); });
+        tabAbout.setOnClickListener(v -> { selectedTabIndex = 5; selectTab(tabAbout); });
     }
 
     private void selectTab(TextView selectedTab) {
