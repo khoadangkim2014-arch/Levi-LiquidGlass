@@ -62,12 +62,14 @@ public class SettingsActivity extends BaseActivity {
     private TextView tabUpdates;
     private TextView tabMigration;
     private TextView tabAbout;
+    private TextView tabDisplay;
 
     private View sectionBasic;
     private View sectionPersonalize;
     private View sectionUpdates;
     private View sectionMigration;
     private View sectionAbout;
+    private View sectionDisplay;
 
     private static final String KEY_SELECTED_TAB = "selected_tab_index";
     private int selectedTabIndex = 0;
