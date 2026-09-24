@@ -427,6 +427,7 @@ public class BaseActivity extends AppCompatActivity {
             TextViewCompat.setCompoundDrawableTintList(tab, ColorStateList.valueOf(color));
         }
 
+        lastActiveTabId = activeTabId;
         // Slide the active pill indicator
         if (activeIndex >= 0) {
             final int finalIndex = activeIndex;

@@ -12,8 +12,6 @@ import android.util.Base64;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.GridLayout;
@@ -21,8 +19,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
-import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Spinner;
+import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -73,7 +73,6 @@ public class SettingsActivity extends BaseActivity {
     private int selectedTabIndex = 0;
 
     private PersonalizationManager personalizationManager;
-    private Spinner spinnerOrientation;
     private LinearLayout colorGridContainer;
     private LinearLayout moreColorsContainer;
     private TextView bgImageStatus;
@@ -97,134 +96,6 @@ public class SettingsActivity extends BaseActivity {
         setupNavBar();
 
         personalizationManager = new PersonalizationManager(this);
-        spinnerOrientation = findViewById(R.id.spinner_orientation);
-        if (spinnerOrientation != null) {
-            ArrayAdapter<CharSequence> orientAdapter = ArrayAdapter.createFromResource(
-                this, R.array.orientation_options, android.R.layout.simple_spinner_item);
-            orientAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerOrientation.setAdapter(orientAdapter);
-            spinnerOrientation.setSelection(personalizationManager.getOrientation(), false);
-            spinnerOrientation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, android.view.View view, int pos, long id) {
-                    personalizationManager.setOrientation(pos);
-                    // Apply immediately
-                    if (pos == PersonalizationManager.ORIENTATION_PORTRAIT) {
-                        setRequestedOrientation(android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                    } else if (pos == PersonalizationManager.ORIENTATION_LANDSCAPE) {
-                        setRequestedOrientation(android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                    } else {
-                        setRequestedOrientation(android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-                    }
-                }
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {}
-            });
-        }
-
-        if (savedInstanceState != null) {
-            selectedTabIndex = savedInstanceState.getInt(KEY_SELECTED_TAB, 0);
-        }
-
-        permissionsHandler = PermissionsHandler.getInstance();
-        permissionResultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (permissionsHandler != null) {
-                        permissionsHandler.onActivityResult(result.getResultCode(), result.getData());
-                    }
-                }
-        );
-        permissionsHandler.setActivity(this, permissionResultLauncher);
-
-        bgImagePickerLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        Uri uri = result.getData().getData();
-                        if (uri != null) {
-                            personalizationManager.setBackgroundImage(uri, this);
-                            updateBgImageUI();
-                            recreate();
-                        }
-                    }
-                }
-        );
-
-        initTabs();
-        setupBasicSection();
-        setupPersonalizeSection();
-        setupUpdatesSection();
-        setupMigrationSection();
-        setupAboutSection();
-
-        TextView[] tabs = getSettingsTabs();
-        if (selectedTabIndex >= tabs.length) {
-            selectedTabIndex = 0;
-        }
-        selectTab(tabs[selectedTabIndex]);
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt(KEY_SELECTED_TAB, selectedTabIndex);
-    }
-
-    private void initTabs() {
-        tabBasic = findViewById(R.id.tab_basic);
-        tabPersonalize = findViewById(R.id.tab_personalize);
-        tabUpdates = findViewById(R.id.tab_updates);
-        tabMigration = findViewById(R.id.tab_migration);
-        tabAbout = findViewById(R.id.tab_about);
-
-        sectionBasic = findViewById(R.id.section_basic);
-        sectionPersonalize = findViewById(R.id.section_personalize);
-        sectionUpdates = findViewById(R.id.section_updates);
-        sectionMigration = findViewById(R.id.section_migration);
-        sectionAbout = findViewById(R.id.section_about);
-
-        tabBasic.setOnClickListener(v -> { selectedTabIndex = 0; selectTab(tabBasic); });
-        tabPersonalize.setOnClickListener(v -> { selectedTabIndex = 1; selectTab(tabPersonalize); });
-        tabUpdates.setOnClickListener(v -> { selectedTabIndex = 2; selectTab(tabUpdates); });
-        tabAbout.setOnClickListener(v -> { selectedTabIndex = 3; selectTab(tabAbout); });
-        tabMigration.setOnClickListener(v -> { selectedTabIndex = 4; selectTab(tabMigration); });
-    }
-
-    private void selectTab(TextView selectedTab) {
-        TextView[] tabs = getSettingsTabs();
-        View[] sections = {sectionBasic, sectionPersonalize, sectionUpdates, sectionAbout, sectionMigration};
-
-        int accent = personalizationManager.getAccentColor();
-
-        for (int i = 0; i < tabs.length; i++) {
-            boolean isSelected = tabs[i] == selectedTab;
-
-            if (isSelected) {
-                if (accent != 0) {
-                    android.graphics.drawable.GradientDrawable gd = new android.graphics.drawable.GradientDrawable();
-                    gd.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
-                    gd.setColor(accent);
-                    gd.setCornerRadius(16 * getResources().getDisplayMetrics().density);
-                    tabs[i].setBackground(gd);
-                } else {
-                    tabs[i].setBackgroundResource(R.drawable.bg_tab_selected);
-                }
-                tabs[i].setTextColor(Color.WHITE);
-                tabs[i].setTextSize(13);
-            } else {
-                tabs[i].setBackgroundResource(R.drawable.bg_tab_unselected);
-                tabs[i].setTextColor(getColor(R.color.text_secondary));
-            }
-
-            if (isSelected) {
-                sections[i].setVisibility(View.VISIBLE);
-                sections[i].setAlpha(0f);
-                sections[i].animate().alpha(1f).setDuration(200).start();
-            } else {
-                sections[i].setVisibility(View.GONE);
-            }
-        }
     }
 
     private TextView[] getSettingsTabs() {

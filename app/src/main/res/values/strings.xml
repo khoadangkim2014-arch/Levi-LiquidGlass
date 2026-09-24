@@ -1135,15 +1135,10 @@ Migration must complete before LeviLauncher can continue.</string>
     <string name="batch_transferring">Transferring %1$d of %2$d…</string>
     <string name="batch_result">%1$d completed, %2$d failed</string>
     <string name="choose_export_folder">Choose export folder</string>
-    <string name="settings_orientation">Screen Orientation</string>
-    <string name="settings_orientation_desc">Lock the launcher to a specific orientation</string>
-    <string name="orientation_auto">Auto (System Default)</string>
-    <string name="orientation_portrait">Portrait</string>
-    <string name="orientation_landscape">Landscape</string>
-    <string-array name="orientation_options">
-        <item>@string/orientation_auto</item>
-        <item>@string/orientation_portrait</item>
-        <item>@string/orientation_landscape</item>
-    </string-array>
+    <string name="bedrocktools_title">BedrockTools</string>
+    <string name="bedrocktools_desc">33 modules: Fullbright, Zoom, NoFog, HUD, AutoGG and more</string>
+    <string name="bedrocktools_install_hint">Install BedrockTools.levipack from Mods tab</string>
+    <string name="quick_launch_title">Quick Launch</string>
+    <string name="game_optimized">Optimized Launch</string>
 </resources>
 
